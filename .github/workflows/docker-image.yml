@@ -37,7 +37,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/pavanpandya/docker-hub-test:latest  # replace with your GitHub username and repository name
+        tags: ghcr.io/pavanpandya/cicd-test:latest  # replace with your GitHub username and repository name
 
     - name: Log out from DockerHub
       run: docker logout
