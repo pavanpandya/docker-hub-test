@@ -22,12 +22,25 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
+    - name: Login to GitHub Container Registry
+      run: echo ${{ secrets.TEMP_TOKEN }} | docker login ghcr.io -u pavanpandya --password-stdin
+
+    - name: Build and push Docker image to Docker Hub
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
         tags: pavanpandya/cicd-test:latest  # replace yourusername/my-app with your DockerHub repository name
 
+    - name: Build and push Docker image to GitHub Packages
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/pavanpandya/docker-hub-test:latest  # replace with your GitHub username and repository name
+
     - name: Log out from DockerHub
       run: docker logout
+
+    - name: Log out from GitHub Container Registry
+      run: docker logout ghcr.io
